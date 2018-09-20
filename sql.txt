@@ -1,0 +1,185 @@
+sudo mysql
+[sudo] password for sois: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.7.23-0ubuntu0.18.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| pruthvi            |
+| pruthvib           |
+| sys                |
++--------------------+
+6 rows in set (0.02 sec)
+
+mysql> create database pruthvi_care;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use pruthvi_care;
+Database changed
+mysql> create table physicians(id int(10),name varchar(10),password varchar(10),primary key(name));
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> create table patients(patient_id int(10),personal_no int (10), first_name varchar(10), second_name varchar(10),sex varchar(10),dob varchar(10),
+    -> place_of_birth varchar(10),place_of_residence varchar(10), physician varchar(10),foreign key (physician) references physicians(name));
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> create table bones(id int(10), bone varchar(10),stage varchar(10),text varchar(10),primary key (stage),foreign key (bone_stages) references consultation(diagnostic));
+ERROR 1072 (42000): Key column 'bone_stages' doesn't exist in table
+mysql> create table bones(id int(10), bone varchar(10),stage varchar(10),text varchar(10),primary key (stage));
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> create table bone_stages(id int(10),name varchar(10),stage varchar(10),primary key(id));
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> create table consultation(consultation_id int(10),personal_num int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_num) references patients(personal_num),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bones(stage),
+    -> create table consultation(consultation_id int(10),personal_num int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_num) references patients(personal_num),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create table consultation(consultation_id int(10),personal_num int(10),date_of_c' at line 2
+mysql> create table consultation(consultation_id int(10),personal_num int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_num) references patients(personal_num),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));                                                                   ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> create table consultation(consultation_id int(10),personal_num int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_num) references patients(personal_num),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_num),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> drop table bone_stage;
+ERROR 1051 (42S02): Unknown table 'pruthvi_care.bone_stage'
+mysql> drop table bone_stages;
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> create table bone_stages(id varchar(10),name varchar(10),stage varchar(10),primary key(id));
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql>  create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql>  create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no),foreign key(physician) references physicians(name),foreign key (diagnostic) references bones(stage),foreign key (diagnostic) references bone_stages(id));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql>  create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no));
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql>  create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no));
+
+^C
+mysql> drop table patients;
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> create table patients(patient_id int(10),personal_no int (10), first_name varchar(10), second_name varchar(10),sex varchar(10),dob varchar(10),
+    ->     -> place_of_birth varchar(10),place_of_residence varchar(10), physician varchar(10),foreign key (physician) references physicians(name));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> place_of_birth varchar(10),place_of_residence varchar(10), physician varchar(' at line 2
+mysql> create table patients(patient_id int(10),personal_no int (10), first_name varchar(10), second_name varchar(10),sex varchar(10),dob varchar(10),     -> place_of_birth varchar(10),place_of_residence varchar(10), physician varchar(10),foreign key (physician) references physicians(name),primary key(personal_no);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> place_of_birth varchar(10),place_of_residence varchar(10), physician varchar(' at line 1
+mysql> create table patients(patient_id int(10),personal_no int (10), first_name varchar(10), second_name varchar(10),sex varchar(10),dob varchar(10),     -> place_of_birth varchar(10),place_of_residence varchar(10), physician varchar(10),foreign key (physician) references physicians(name),primary key(personal_no));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> place_of_birth varchar(10),place_of_residence varchar(10), physician varchar(' at line 1
+mysql> create table patients(patient_id int(10),personal_no int (10), first_name varchar(10), second_name varchar(10),sex varchar(10),dob varchar(10),  place_of_birth varchar(10),place_of_residence varchar(10), physician varchar(10),foreign key (physician) references physicians(name),primary key(personal_no));
+Query OK, 0 rows affected (0.22 sec)
+
+mysql>  create table consultation(consultation_id int(10),personal_no int(10),date_of_consultation int(10),weight int(10),height int(10),diagnostic varchar(10),selected_bones varchar(10),real_score varchar(10),maturity_score varchar(10),bone_age varchar(10),physician varchar(10),foreign key(personal_no) references patients(personal_no));
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> describe consultation
+    -> ;
++----------------------+-------------+------+-----+---------+-------+
+| Field                | Type        | Null | Key | Default | Extra |
++----------------------+-------------+------+-----+---------+-------+
+| consultation_id      | int(10)     | YES  |     | NULL    |       |
+| personal_no          | int(10)     | YES  | MUL | NULL    |       |
+| date_of_consultation | int(10)     | YES  |     | NULL    |       |
+| weight               | int(10)     | YES  |     | NULL    |       |
+| height               | int(10)     | YES  |     | NULL    |       |
+| diagnostic           | varchar(10) | YES  |     | NULL    |       |
+| selected_bones       | varchar(10) | YES  |     | NULL    |       |
+| real_score           | varchar(10) | YES  |     | NULL    |       |
+| maturity_score       | varchar(10) | YES  |     | NULL    |       |
+| bone_age             | varchar(10) | YES  |     | NULL    |       |
+| physician            | varchar(10) | YES  |     | NULL    |       |
++----------------------+-------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+
+mysql> insert into physicians values('1','sam','123');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into physicians values('2','manish','manish@123');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into physicians values('3','rekha','rekha@123');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into patients values('1','1258796','ram','baba','male','23june','bangalore','bangalore','sam');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into bones values('1','hdjhsj','3','dgsg');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into bone_stages values('1','tom','5');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into consultation values('1','1258796','23june','45','56','3','ijid','342','345','34','sam');
+ERROR 1265 (01000): Data truncated for column 'date_of_consultation' at row 1
+mysql> insert into consultation values('1','1258796','23april','45','56','3','ijid','342','345','34','sam');
+ERROR 1265 (01000): Data truncated for column 'date_of_consultation' at row 1
+mysql> insert into consultation values('1','1258796','23','45','56','3','ijid','342','345','34','sam');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from physicians;
++------+--------+------------+
+| id   | name   | password   |
++------+--------+------------+
+|    2 | manish | manish@123 |
+|    3 | rekha  | rekha@123  |
+|    1 | sam    | 123        |
++------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from patients;
++------------+-------------+------------+-------------+------+--------+----------------+--------------------+-----------+
+| patient_id | personal_no | first_name | second_name | sex  | dob    | place_of_birth | place_of_residence | physician |
++------------+-------------+------------+-------------+------+--------+----------------+--------------------+-----------+
+|          1 |     1258796 | ram        | baba        | male | 23june | bangalore      | bangalore          | sam       |
++------------+-------------+------------+-------------+------+--------+----------------+--------------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from consultation;
++-----------------+-------------+----------------------+--------+--------+------------+----------------+------------+----------------+----------+-----------+
+| consultation_id | personal_no | date_of_consultation | weight | height | diagnostic | selected_bones | real_score | maturity_score | bone_age | physician |
++-----------------+-------------+----------------------+--------+--------+------------+----------------+------------+----------------+----------+-----------+
+|               1 |     1258796 |                   23 |     45 |     56 | 3          | ijid           | 342        | 345            | 34       | sam       |
++-----------------+-------------+----------------------+--------+--------+------------+----------------+------------+----------------+----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from bones;
++------+--------+-------+------+
+| id   | bone   | stage | text |
++------+--------+-------+------+
+|    1 | hdjhsj | 3     | dgsg |
++------+--------+-------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from bones_stages;
+ERROR 1146 (42S02): Table 'pruthvi_care.bones_stages' doesn't exist
+mysql> select * from bone_stages;
++----+------+-------+
+| id | name | stage |
++----+------+-------+
+| 1  | tom  | 5     |
++----+------+-------+
+1 row in set (0.00 sec)
+
+ 
